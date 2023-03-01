@@ -1,25 +1,56 @@
 import logo from './logo.svg';
+import { Component } from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Hello
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      isClicked: false, 
+      todos: [], 
+      text: ''
+    };
+  };
+
+  onClickHandler = () => {
+    const toDos = this.state.todos.slice();
+    toDos.push(this.state.text)
+
+    this.setState({
+      ...this.state,
+      todos: toDos,
+      text: '',
+    });
+  };
+
+  onChangeHandler = (e) => {
+    this.setState({...this.state,
+    text : e.target.value
+  });
+  };
+
+  onDelete = (index) => {
+    this.setState({...this.state,
+      todos : this.state.todos.filter((r, idx) => idx !== index)
+    });
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <form>
+            <input type='text' name='text' onChange={this.onChangeHandler}></input>
+          </form>
+          <button onClick={this.onClickHandler} >What's my plan for today?</button>
+          {this.state.todos.map((todo, index) => (
+          <p key={index}>{todo}<button onClick={() => {this.onDelete(index)}}>Remove Todo</button></p>))}
+        </header>
+      </div>
+    );
+  };
+};
 
 export default App;
