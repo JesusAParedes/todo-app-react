@@ -18,10 +18,10 @@ class App extends Component {
     toDos.push(this.state.text)
 
     this.setState({
-      ...this.state,
       todos: toDos,
-      text: '',
+      text: " ",
     });
+    console.log(this.state.todos);
   };
 
   onChangeHandler = (e) => {
@@ -42,7 +42,7 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <form>
-            <input type='text' name='text' onChange={this.onChangeHandler}></input>
+            <input type='text' name='text' value={this.state.text} onChange={this.onChangeHandler}></input>
           </form>
           <button onClick={this.onClickHandler} >What's my plan for today?</button>
           {this.state.todos.map((todo, index) => (
